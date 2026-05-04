@@ -157,7 +157,7 @@
   .review-author { font-size:10px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white-faint); }
   /* Omakase cards */
   .ocards { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
-  .ocard { padding:44px 36px; background:var(--dark); border-top:1px solid var(--white-faint); transition:background 0.2s; position:relative; overflow:hidden; }
+  .ocard { padding:44px 36px; background:var(--dark); border-top:1px solid var(--white-faint); transition:background 0.2s; position:relative; overflow:hidden; isolation:isolate; }
   .ocard:hover { background:#1C1A16; }
   .ocard.feat { border-top-color:var(--red); background:#180E09; }
   .ocard.feat:hover { background:#1E1109; }
@@ -166,9 +166,9 @@
   .ocard-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,#180E09 40%,rgba(24,14,9,0.7) 100%); }
   .ocard.feat .ocard-bg::after { background:linear-gradient(to top,#180E09 40%,rgba(24,14,9,0.7) 100%); }
   .ocard:not(.feat) .ocard-bg::after { background:linear-gradient(to top,#141310 40%,rgba(20,19,16,0.7) 100%); }
-  .ocard-body { position:relative; z-index:1; }
-  .ocard-idx { font-size:9px; font-weight:200; letter-spacing:3px; color:var(--red); text-transform:uppercase; margin-bottom:28px; }
-  .ocard h3 { font-size:18px; font-weight:100; letter-spacing:4px; text-transform:uppercase; color:var(--white); margin-bottom:14px; }
+  .ocard-body { position:relative; z-index:1; word-break:break-word; overflow-wrap:break-word; overflow:hidden; }
+  .ocard-idx { font-size:9px; font-weight:200; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin-bottom:20px; white-space:normal; word-break:break-word; }
+  .ocard h3 { font-size:18px; font-weight:100; letter-spacing:4px; text-transform:uppercase; color:var(--white); margin-bottom:14px; word-break:break-word; overflow-wrap:break-word; }
   .ocard p { font-size:13px; font-weight:200; line-height:1.85; color:var(--white-dim); margin-bottom:36px; }
   .ocard-sub { font-size:12px; color:var(--red); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
   .ocard-price { border-top:1px solid var(--white-faint); padding-top:18px; margin-bottom:20px; }
@@ -335,12 +335,14 @@
     .review-card { padding:28px 20px; }
     .review-text { font-size:13px; }
     .ocards { grid-template-columns:1fr; }
-    .ocard { padding:32px 20px; }
+    .ocard { padding:28px 16px; word-break:break-word; max-width:100%; overflow:hidden; }
+    .ocard-idx { font-size:8px; letter-spacing:1px; }
+    .ocard p { font-size:12px; word-break:break-word; overflow-wrap:break-word; }
     .ocard h3 { font-size:16px; letter-spacing:3px; }
     .ocard p { font-size:12px; margin-bottom:24px; }
     .ocard-price strong { font-size:22px; }
-    .ocard-price-grid { grid-template-columns:1fr 1fr; gap:12px; }
-    .ocard-price-grid strong { font-size:18px; }
+    .ocard-price-grid { grid-template-columns:1fr; gap:8px; }
+    .ocard-price-grid strong { font-size:16px; letter-spacing:0; }
 
     /* MENU */
     .menu-section { padding:72px 0; }
