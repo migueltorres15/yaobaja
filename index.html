@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YAO — IZAKAYA / OMAKASE / MUSIC · Todos Santos, B.C.S</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E03D1A;
+    --black: #080807;
+    --off-black: #0E0D0B;
+    --dark: #141310;
+    --panel: #1A1815;
+    --white: #F5F3EF;
+    --white-dim: rgba(245,243,239,0.55);
+    --white-faint: rgba(245,243,239,0.12);
+    --white-ghost: rgba(245,243,239,0.05);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 48px;
+    background: linear-gradient(to bottom, rgba(8,8,7,0.92), transparent);
+  }
+  .nav-logo { font-size:13px; font-weight:300; letter-spacing:6px; color:var(--white); text-decoration:none; text-transform:uppercase; }
+  .nav-right { display:flex; align-items:center; gap:40px; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { color:var(--white-dim); text-decoration:none; font-size:11px; font-weight:200; letter-spacing:3px; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--white); }
+  .nav-reserve { font-size:10px; font-weight:300; letter-spacing:3px; text-transform:uppercase; color:var(--black); background:var(--red); padding:10px 20px; text-decoration:none; transition:opacity 0.2s; }
+  .nav-reserve:hover { opacity:0.85; }
+
+  /* ── HERO ── */
+  .hero {
+    position:relative; min-height:100vh;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background-image: url('images/hero-bg.jpg');
+    background-size:cover; background-position:center 40%;
+  }
+  .hero-bg::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(8,8,7,0.5) 0%, rgba(8,8,7,0.25) 40%, rgba(8,8,7,0.8) 100%);
+  }
+  /* Vinyl rings deco */
+  .hero-vinyl {
+    position:absolute; right:-100px; top:50%; transform:translateY(-50%);
+    width:560px; height:560px; opacity:0.045;
+    animation: vspin 70s linear infinite;
+  }
+  @keyframes vspin { from{transform:translateY(-50%) rotate(0deg);} to{transform:translateY(-50%) rotate(360deg);} }
+  .hero-sign {
+    position:absolute; top:108px; left:48px; opacity:0.1;
+    font-size:11px; font-weight:200; letter-spacing:5px; color:var(--white);
+    text-transform:uppercase; border:1px solid currentColor; padding:8px 16px; z-index:2;
+  }
+  .hero-content {
+    position:relative; z-index:2;
+    padding:0 48px 80px;
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:0;
+  }
+  .hero-subs { font-size:11px; font-weight:200; letter-spacing:5px; color:var(--white-dim); text-transform:uppercase; margin-bottom:20px; }
+  .hero-wordmark { font-size:clamp(88px,13vw,164px); font-weight:100; letter-spacing:28px; color:var(--white); text-transform:uppercase; line-height:1; margin-bottom:20px; }
+  .hero-location { font-size:11px; font-weight:200; letter-spacing:4px; color:var(--white-dim); text-transform:uppercase; margin-bottom:36px; }
+  .hero-line { font-size:13px; font-weight:200; letter-spacing:1.5px; color:rgba(245,243,239,0.6); max-width:540px; line-height:1.8; margin-bottom:40px; font-style:italic; }
+  .hero-btn { font-size:11px; font-weight:300; letter-spacing:4px; text-transform:uppercase; color:var(--black); background:var(--red); padding:16px 52px; text-decoration:none; transition:opacity 0.2s; }
+  .hero-btn:hover { opacity:0.85; }
+  .hero-scroll { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; animation:hbreathe 3s ease-in-out infinite; }
+  @keyframes hbreathe { 0%,100%{opacity:0.25;} 50%{opacity:0.55;} }
+  .hero-scroll span { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--white-dim); }
+  .scroll-line { width:1px; height:30px; background:linear-gradient(to bottom, var(--red), transparent); }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap { border-top:1px solid rgba(224,61,26,0.18); border-bottom:1px solid rgba(224,61,26,0.18); overflow:hidden; padding:11px 0; background:var(--off-black); position:relative; z-index:1; }
+  .marquee-track { display:flex; white-space:nowrap; animation:mq 22s linear infinite; }
+  @keyframes mq { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .mq-item { display:inline-flex; align-items:center; gap:20px; padding:0 28px; font-size:10px; font-weight:200; letter-spacing:4px; text-transform:uppercase; color:var(--white-dim); flex-shrink:0; }
+  .mq-dot { width:3px; height:3px; border-radius:50%; background:var(--red); flex-shrink:0; }
+
+  /* ── SHARED ── */
+  section { position:relative; z-index:1; }
+  .container { max-width:1280px; margin:0 auto; padding:0 48px; }
+  .section-label { font-size:10px; font-weight:200; letter-spacing:4px; color:var(--red); text-transform:uppercase; margin-bottom:20px; }
+  .section-title { font-size:clamp(40px,6vw,80px); font-weight:100; letter-spacing:8px; text-transform:uppercase; color:var(--white); line-height:1; }
+  .section-title span { display:block; font-size:clamp(11px,1.1vw,15px); letter-spacing:5px; color:var(--red); margin-bottom:14px; }
+
+  /* ── ABOUT ── */
+  .about { padding:120px 0; }
+  .about-bg { position:absolute; inset:0; background-image:url('images/bar-scene.jpg'); background-size:cover; background-position:center 60%; background-attachment:fixed; }
+  .about-bg::after { content:''; position:absolute; inset:0; background:rgba(8,8,7,0.88); }
+  .about-inner { position:relative; z-index:1; }
+  .about-grid { display:grid; grid-template-columns:220px 1fr; gap:80px; align-items:start; }
+  .kanji-stack { padding-top:32px; }
+  .kanji-row { display:flex; align-items:baseline; gap:14px; padding:14px 0; border-bottom:1px solid var(--white-faint); }
+  .kanji-char { font-size:26px; color:var(--red); font-weight:100; width:32px; flex-shrink:0; }
+  .kanji-label { font-size:10px; font-weight:200; letter-spacing:4px; text-transform:uppercase; color:var(--white-dim); }
+  .about-text h2 { font-size:clamp(30px,3.5vw,50px); font-weight:100; letter-spacing:2px; line-height:1.2; color:var(--white); text-transform:uppercase; margin-bottom:28px; }
+  .about-text h2 em { font-style:normal; color:var(--red); }
+  .about-text p { font-size:14px; font-weight:200; line-height:1.9; color:var(--white-dim); max-width:520px; margin-bottom:18px; }
+
+  /* ── HOURS ── */
+  .hours { padding:60px 0; background:var(--off-black); border-top:1px solid var(--white-faint); border-bottom:1px solid var(--white-faint); }
+  .hours-inner { display:grid; grid-template-columns:200px 1fr; gap:60px; align-items:center; }
+  .hours-days { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .hday { text-align:center; padding:20px 8px; background:var(--dark); }
+  .hday.open { background:var(--panel); }
+  .hday.omakase { background:var(--red); }
+  .hday-name { font-size:9px; font-weight:200; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+  .hday.open .hday-name, .hday.omakase .hday-name { color:var(--white-dim); }
+  .hday:not(.open):not(.omakase) .hday-name { color:var(--white-faint); }
+  .hday.omakase .hday-name { color:rgba(0,0,0,0.55); }
+  .hday-time { font-size:11px; font-weight:200; letter-spacing:1px; text-transform:uppercase; }
+  .hday.open .hday-time { color:var(--white); }
+  .hday:not(.open):not(.omakase) .hday-time { color:rgba(224,61,26,0.45); }
+  .hday.omakase .hday-time { color:var(--black); font-weight:300; }
+  .hday-sub { font-size:8px; font-weight:200; letter-spacing:1px; text-transform:uppercase; margin-top:4px; color:rgba(0,0,0,0.5); }
+
+  /* ── IMAGE ROW ── */
+  .image-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; height:460px; }
+  .img-panel { position:relative; overflow:hidden; background:var(--panel); }
+  .img-panel img { width:100%; height:100%; object-fit:cover; object-position:center; transition:transform 0.6s ease; }
+  .img-panel:hover img { transform:scale(1.03); }
+  .img-panel-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(8,8,7,0.65) 0%,rgba(8,8,7,0.05) 60%); }
+  .ip-label { position:absolute; bottom:20px; left:24px; font-size:9px; font-weight:200; letter-spacing:4px; text-transform:uppercase; color:var(--white-dim); }
+
+  /* ── OMAKASE ── */
+  .omakase { padding:120px 0; background:var(--off-black); }
+  .omakase-hd { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:56px; }
+  .omakase-note { font-size:11px; font-weight:200; letter-spacing:2px; color:var(--white-dim); text-align:right; max-width:180px; line-height:1.9; text-transform:uppercase; }
+  /* Experience intro */
+  .omakase-intro { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:2px; height:420px; }
+  .omakase-intro-img { position:relative; overflow:hidden; }
+  .omakase-intro-img img { width:100%; height:100%; object-fit:cover; object-position:center 40%; }
+  .omakase-intro-text { background:var(--dark); padding:56px 48px; display:flex; flex-direction:column; justify-content:center; }
+  .omakase-intro-text h3 { font-size:clamp(22px,3vw,36px); font-weight:100; letter-spacing:3px; text-transform:uppercase; color:var(--white); line-height:1.2; margin-bottom:24px; margin-top:20px; }
+  .omakase-intro-text p { font-size:14px; font-weight:200; line-height:1.9; color:var(--white-dim); max-width:440px; }
+  /* Reviews */
+  .reviews { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:60px; }
+  .review-card { background:var(--panel); padding:40px 36px; border-top:1px solid rgba(224,61,26,0.25); }
+  .review-stars { font-size:9px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:16px; }
+  .review-text { font-size:14px; font-weight:200; line-height:1.85; color:var(--white-dim); margin-bottom:20px; }
+  .review-author { font-size:10px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white-faint); }
+  /* Omakase cards */
+  .ocards { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .ocard { padding:44px 36px; background:var(--dark); border-top:1px solid var(--white-faint); transition:background 0.2s; position:relative; overflow:hidden; }
+  .ocard:hover { background:#1C1A16; }
+  .ocard.feat { border-top-color:var(--red); background:#180E09; }
+  .ocard.feat:hover { background:#1E1109; }
+  .ocard-bg { position:absolute; inset:0; z-index:0; }
+  .ocard-bg img { width:100%; height:100%; object-fit:cover; opacity:0.14; }
+  .ocard-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,#180E09 40%,rgba(24,14,9,0.7) 100%); }
+  .ocard.feat .ocard-bg::after { background:linear-gradient(to top,#180E09 40%,rgba(24,14,9,0.7) 100%); }
+  .ocard:not(.feat) .ocard-bg::after { background:linear-gradient(to top,#141310 40%,rgba(20,19,16,0.7) 100%); }
+  .ocard-body { position:relative; z-index:1; }
+  .ocard-idx { font-size:9px; font-weight:200; letter-spacing:3px; color:var(--red); text-transform:uppercase; margin-bottom:28px; }
+  .ocard h3 { font-size:18px; font-weight:100; letter-spacing:4px; text-transform:uppercase; color:var(--white); margin-bottom:14px; }
+  .ocard p { font-size:13px; font-weight:200; line-height:1.85; color:var(--white-dim); margin-bottom:36px; }
+  .ocard-sub { font-size:12px; color:var(--red); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+  .ocard-price { border-top:1px solid var(--white-faint); padding-top:18px; margin-bottom:20px; }
+  .ocard-price strong { display:block; font-size:26px; font-weight:100; letter-spacing:1px; color:var(--white); margin-bottom:4px; }
+  .ocard-price span { font-size:10px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white-dim); }
+  .ocard-price-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; border-top:1px solid var(--white-faint); padding-top:18px; margin-bottom:20px; }
+  .ocard-price-grid strong { display:block; font-size:22px; font-weight:100; color:var(--white); margin-bottom:4px; }
+  .ocard-price-grid span { font-size:10px; font-weight:200; letter-spacing:1px; text-transform:uppercase; color:var(--white-dim); }
+  .ocard-cta { font-size:10px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--white); text-decoration:none; display:inline-flex; align-items:center; gap:10px; transition:gap 0.2s; }
+  .ocard-cta:hover { gap:16px; }
+  .ocard-cta::after { content:'→'; color:var(--red); }
+  .ocard.feat .ocard-cta { color:var(--black); background:var(--red); padding:11px 22px; }
+  .ocard.feat .ocard-cta::after { color:var(--black); }
+
+  /* ── MENU ── */
+  .menu-section { padding:120px 0; }
+  .food-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:2px; height:260px; margin-bottom:2px; }
+  .food-strip div { overflow:hidden; }
+  .food-strip img { width:100%; height:100%; object-fit:cover; object-position:center; transition:transform 0.5s ease; }
+  .food-strip div:hover img { transform:scale(1.05); }
+  .menu-hd { margin-bottom:56px; }
+  .menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+  .mcat { border-top:1px solid var(--white-faint); padding:44px 0; }
+  .mcat:nth-child(odd) { padding-right:56px; border-right:1px solid var(--white-faint); }
+  .mcat:nth-child(even) { padding-left:56px; }
+  .mcat-label { font-size:9px; font-weight:200; letter-spacing:4px; text-transform:uppercase; color:var(--red); margin-bottom:24px; }
+  .mitem { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:13px 0; border-bottom:1px solid var(--white-ghost); }
+  .mitem h4 { font-size:13px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white); margin-bottom:3px; }
+  .mitem p { font-size:11px; font-weight:200; color:var(--white-dim); line-height:1.5; }
+  .mitem-price { font-size:12px; font-weight:200; color:var(--white-dim); white-space:nowrap; flex-shrink:0; }
+  /* Drinks */
+  .drinks-grid { border-top:1px solid var(--white-faint); margin-top:48px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; }
+  .drinks-col { padding:36px 40px; background:var(--off-black); border-top:1px solid var(--white-faint); }
+  .menu-note { margin-top:44px; font-size:10px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:rgba(245,243,239,0.2); }
+
+  /* ── STATEMENT ── */
+  .statement { position:relative; height:480px; overflow:hidden; }
+  .statement img { width:100%; height:100%; object-fit:cover; object-position:center 45%; }
+  .statement-vignette { position:absolute; inset:0; background:linear-gradient(to right,rgba(8,8,7,0.35) 0%,transparent 20%,transparent 80%,rgba(8,8,7,0.35) 100%); }
+  .statement-tag { position:absolute; bottom:32px; left:0; right:0; text-align:center; font-size:9px; font-weight:200; letter-spacing:6px; text-transform:uppercase; color:rgba(245,243,239,0.3); }
+
+  /* ── EVENTS ── */
+  .events { padding:120px 0; background:var(--off-black); }
+  .events-hd { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:56px; }
+  .erow { display:grid; grid-template-columns:76px 84px 1fr 24px; align-items:center; gap:28px; padding:26px 0; border-top:1px solid var(--white-faint); transition:opacity 0.2s; }
+  .erow:hover { opacity:0.65; }
+  .eday { font-size:38px; font-weight:100; letter-spacing:-1px; color:var(--white); line-height:1; }
+  .emonth { font-size:9px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--white-dim); }
+  .etag { font-size:9px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--red); border:1px solid rgba(224,61,26,0.3); padding:5px 10px; white-space:nowrap; }
+  .einfo h4 { font-size:14px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white); margin-bottom:4px; }
+  .einfo p { font-size:11px; font-weight:200; letter-spacing:1px; color:var(--white-dim); }
+  .earrow { color:var(--white-faint); font-size:18px; }
+
+  /* ── RESERVE ── */
+  .reserve { padding:160px 0; text-align:center; position:relative; overflow:hidden; }
+  .reserve-bg { position:absolute; inset:0; background-image:url('images/reserve-bg.jpg'); background-size:cover; background-position:center; }
+  .reserve-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,8,7,0.55) 0%, rgba(8,8,7,0.45) 50%, rgba(8,8,7,0.65) 100%); }
+  .reserve-in { position:relative; z-index:1; }
+  .reserve-eyebrow { font-size:10px; font-weight:200; letter-spacing:5px; text-transform:uppercase; color:var(--red); margin-bottom:24px; }
+  .reserve-in h2 { font-size:clamp(56px,9vw,124px); font-weight:100; letter-spacing:12px; text-transform:uppercase; color:var(--white); line-height:1; margin-bottom:48px; }
+  .ropts { display:flex; justify-content:center; gap:2px; margin-bottom:52px; flex-wrap:wrap; }
+  .ropt { font-size:10px; font-weight:200; letter-spacing:3px; text-transform:uppercase; padding:13px 26px; background:var(--panel); color:var(--white-dim); border:none; cursor:pointer; transition:background 0.2s,color 0.2s; }
+  .ropt:hover, .ropt.on { background:var(--red); color:var(--black); }
+  .rctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .cta-p { font-size:11px; font-weight:300; letter-spacing:3px; text-transform:uppercase; color:var(--black); background:var(--white); padding:15px 36px; text-decoration:none; transition:opacity 0.2s; }
+  .cta-p:hover { opacity:0.85; }
+  .cta-o { font-size:11px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--white-dim); background:transparent; border:1px solid var(--white-faint); padding:15px 36px; text-decoration:none; transition:border-color 0.2s,color 0.2s; }
+  .cta-o:hover { border-color:var(--white-dim); color:var(--white); }
+  .reserve-note { margin-top:36px; font-size:10px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:rgba(245,243,239,0.2); }
+
+  /* ── INFO ── */
+  .info-section { padding:80px 0; border-top:1px solid var(--white-faint); }
+  .info-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+  .icol { padding:0 36px; border-right:1px solid var(--white-faint); }
+  .icol:first-child { padding-left:0; }
+  .icol:last-child { border-right:none; }
+  .icol label { display:block; font-size:9px; font-weight:200; letter-spacing:4px; text-transform:uppercase; color:var(--red); margin-bottom:14px; }
+  .icol p, .icol a { font-size:13px; font-weight:200; letter-spacing:0.5px; color:var(--white-dim); line-height:2; text-decoration:none; display:block; transition:color 0.2s; }
+  .icol a:hover { color:var(--white); }
+  .icol .red-link { color:var(--red); margin-top:10px; font-size:11px; letter-spacing:2px; }
+
+  /* ── FOOTER ── */
+  footer { padding:36px 0; border-top:1px solid var(--white-faint); }
+  .footer-in { display:flex; align-items:center; justify-content:space-between; }
+  .footer-logo { font-size:11px; font-weight:200; letter-spacing:5px; text-transform:uppercase; color:var(--white-dim); }
+  .footer-mid { font-size:10px; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--white-faint); }
+  .footer-links { display:flex; gap:24px; }
+  .footer-links a { font-size:10px; font-weight:200; letter-spacing:2px; text-transform:uppercase; color:var(--white-faint); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--white-dim); }
+
+  /* ── MOBILE ── */
+  /* ── TABLET ── */
+  @media (max-width:1024px) {
+    .ocards { grid-template-columns:1fr 1fr; }
+    .ocards .ocard:last-child { grid-column:span 2; }
+    .hours-days { gap:1px; }
+    .hday { padding:16px 4px; }
+    .hday-name { font-size:8px; letter-spacing:1px; }
+    .hday-time { font-size:10px; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width:768px) {
+
+    /* NAV */
+    nav { padding:18px 20px; }
+    .nav-links { display:none; }
+    .nav-reserve { padding:9px 16px; font-size:9px; letter-spacing:2px; }
+
+    /* GLOBAL */
+    .container { padding:0 20px; }
+    .section-title { font-size:clamp(32px,10vw,52px); letter-spacing:4px; }
+    .section-title span { font-size:10px; letter-spacing:3px; }
+
+    /* HERO */
+    .hero { min-height:100svh; }
+    .hero-bg { background-position:center 30%; }
+    .hero-vinyl { display:none; }
+    .hero-sign { display:none; }
+    .hero-content { padding:0 20px 64px; gap:0; }
+    .hero-subs { font-size:9px; letter-spacing:3px; margin-bottom:14px; }
+    .hero-wordmark { font-size:clamp(72px,20vw,110px); letter-spacing:14px; margin-bottom:12px; }
+    .hero-location { font-size:9px; letter-spacing:3px; margin-bottom:24px; }
+    .hero-line { font-size:12px; letter-spacing:0.5px; margin-bottom:28px; max-width:100%; }
+    .hero-btn { padding:14px 36px; font-size:10px; letter-spacing:3px; }
+
+    /* MARQUEE */
+    .mq-item { font-size:9px; letter-spacing:3px; padding:0 20px; }
+
+    /* ABOUT */
+    .about { padding:72px 0; }
+    .about-grid { grid-template-columns:1fr; gap:32px; }
+    .kanji-stack { padding-top:0; display:flex; flex-direction:row; gap:0; }
+    .kanji-row { flex:1; flex-direction:column; align-items:center; gap:6px; padding:14px 8px; border-bottom:none; border-right:1px solid var(--white-faint); text-align:center; }
+    .kanji-row:last-child { border-right:none; }
+    .kanji-char { font-size:22px; width:auto; }
+    .kanji-label { font-size:8px; letter-spacing:2px; }
+    .about-text h2 { font-size:clamp(24px,8vw,38px); letter-spacing:1px; margin-bottom:20px; }
+    .about-text p { font-size:13px; }
+
+    /* HOURS */
+    .hours { padding:40px 0; }
+    .hours-inner { grid-template-columns:1fr; gap:20px; }
+    .hours-days { grid-template-columns:repeat(7,1fr); gap:1px; }
+    .hday { padding:12px 3px; }
+    .hday-name { font-size:7px; letter-spacing:1px; margin-bottom:6px; }
+    .hday-time { font-size:9px; }
+    .hday-sub { font-size:6px; margin-top:3px; }
+
+    /* IMAGE ROW */
+    .image-row { grid-template-columns:1fr; height:auto; gap:2px; }
+    .img-panel { height:260px; }
+
+    /* OMAKASE */
+    .omakase { padding:72px 0; }
+    .omakase-hd { flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:36px; }
+    .omakase-note { display:none; }
+    .omakase-intro { grid-template-columns:1fr; height:auto; }
+    .omakase-intro-img { height:260px; }
+    .omakase-intro-text { padding:36px 20px; }
+    .omakase-intro-text h3 { font-size:clamp(20px,7vw,28px); margin-bottom:16px; }
+    .omakase-intro-text p { font-size:13px; }
+    .reviews { grid-template-columns:1fr; }
+    .review-card { padding:28px 20px; }
+    .review-text { font-size:13px; }
+    .ocards { grid-template-columns:1fr; }
+    .ocard { padding:32px 20px; }
+    .ocard h3 { font-size:16px; letter-spacing:3px; }
+    .ocard p { font-size:12px; margin-bottom:24px; }
+    .ocard-price strong { font-size:22px; }
+    .ocard-price-grid { grid-template-columns:1fr 1fr; gap:12px; }
+    .ocard-price-grid strong { font-size:18px; }
+
+    /* MENU */
+    .menu-section { padding:72px 0; }
+    .food-strip { grid-template-columns:repeat(3,1fr); height:160px; }
+    .food-strip div:nth-child(4),
+    .food-strip div:nth-child(5) { display:none; }
+    .menu-grid { grid-template-columns:1fr; }
+    .mcat { padding:28px 0; }
+    .mcat:nth-child(odd) { padding-right:0; border-right:none; }
+    .mcat:nth-child(even) { padding-left:0; }
+    .mitem h4 { font-size:12px; letter-spacing:1px; }
+    .mitem p { font-size:10px; }
+    .mitem-price { font-size:11px; }
+    .drinks-grid { grid-template-columns:1fr; gap:0; }
+    .drinks-col { padding:24px 0; border-top:1px solid var(--white-faint); }
+    .menu-note { font-size:9px; }
+
+    /* STATEMENT */
+    .statement { height:320px; }
+
+    /* EVENTS */
+    .events { padding:72px 0; }
+    .events-hd { flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:36px; }
+    .erow { grid-template-columns:52px 1fr; gap:16px; padding:20px 0; }
+    .eday { font-size:30px; }
+    .erow[style*="border-left"] { padding-left:12px; margin-left:-14px; }
+    .etag { display:none; }
+    .earrow { display:none; }
+    .einfo h4 { font-size:12px; letter-spacing:1px; }
+    .einfo p { font-size:10px; }
+    /* Reserve button in event rows */
+    .erow a[style*="background:var(--red)"] {
+      font-size:8px;
+      padding:6px 12px;
+      letter-spacing:1px;
+    }
+
+    /* RESERVE */
+    .reserve { padding:100px 0; }
+    .reserve-eyebrow { font-size:9px; letter-spacing:4px; margin-bottom:16px; }
+    .reserve-in h2 { font-size:clamp(44px,14vw,72px); letter-spacing:8px; margin-bottom:32px; }
+    .ropts { gap:2px; margin-bottom:36px; }
+    .ropt { font-size:9px; letter-spacing:2px; padding:11px 14px; }
+    .rctas { gap:8px; }
+    .cta-p, .cta-o { font-size:10px; padding:13px 24px; letter-spacing:2px; }
+    .reserve-note { font-size:9px; letter-spacing:1px; margin-top:24px; }
+
+    /* INFO */
+    .info-section { padding:56px 0; }
+    .info-grid { grid-template-columns:1fr 1fr; gap:32px 24px; }
+    .icol { padding:0; border-right:none; }
+    .icol label { font-size:8px; letter-spacing:3px; margin-bottom:10px; }
+    .icol p, .icol a { font-size:12px; line-height:1.8; }
+
+    /* FOOTER */
+    footer { padding:28px 0; }
+    .footer-in { flex-direction:column; gap:14px; text-align:center; }
+    .footer-mid { display:none; }
+    .footer-logo { font-size:10px; letter-spacing:4px; }
+    .footer-links { gap:20px; justify-content:center; }
+    .footer-links a { font-size:9px; }
+  }
+
+  /* ── SMALL PHONES (iPhone SE etc) ── */
+  @media (max-width:390px) {
+    .hero-wordmark { font-size:72px; letter-spacing:10px; }
+    .hours-days { grid-template-columns:repeat(7,1fr); }
+    .hday-name { font-size:6px; letter-spacing:0; }
+    .hday-time { font-size:8px; }
+    .hday-sub { display:none; }
+    .info-grid { grid-template-columns:1fr; gap:28px; }
+    .ropts { flex-direction:column; align-items:center; }
+    .ropt { width:100%; text-align:center; }
+  }
+
+  /* ── REVEAL ANIMATION ── */
+  .rv { opacity:0; transform:translateY(20px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .rv.in { opacity:1; transform:none; }
+
+  /* ── MOBILE NAV ── */
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-burger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--white);
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,7,0.98);
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: var(--white-dim);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+  .mobile-menu-nav a {
+    font-size: 11px;
+    font-weight: 200;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    text-decoration: none;
+    padding: 22px 0;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--white-faint);
+    transition: color 0.2s;
+  }
+  .mobile-menu-nav a:first-child { border-top: 1px solid var(--white-faint); }
+  .mobile-menu-nav a:hover { color: var(--white); }
+  .mobile-menu-reserve {
+    color: var(--red) !important;
+    letter-spacing: 6px;
+  }
+  @media (max-width:768px) {
+    .nav-burger { display: flex; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">YAO</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#omakase">Omakase</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#info">Find Us</a></li>
+    </ul>
+    <a href="#reserve" class="nav-reserve">Reserve</a>
+    <button class="nav-burger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
+  <div class="mobile-menu-nav">
+    <a href="#omakase" onclick="toggleMenu()">Omakase</a>
+    <a href="#menu" onclick="toggleMenu()">Menu</a>
+    <a href="#events" onclick="toggleMenu()">Events</a>
+    <a href="#info" onclick="toggleMenu()">Find Us</a>
+    <a href="#reserve" onclick="toggleMenu()" class="mobile-menu-reserve">Reserve</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-vinyl" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="280" cy="280" r="274" stroke="white" stroke-width="1.5"/>
+    <circle cx="280" cy="280" r="250" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="224" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="198" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="172" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="146" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="116" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="88" stroke="white" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="62" stroke="white" stroke-width="1"/>
+    <circle cx="280" cy="280" r="38" fill="white" opacity="0.12"/>
+    <circle cx="280" cy="280" r="18" fill="white" opacity="0.25"/>
+    <circle cx="280" cy="280" r="6" fill="white" opacity="0.5"/>
+  </svg>
+  <div class="hero-sign">居酒屋 &nbsp; YAO</div>
+  <div class="hero-content">
+    <p class="hero-subs">/IZAKAYA &nbsp;/&nbsp; OMAKASE &nbsp;/&nbsp; MUSIC</p>
+    <span class="hero-wordmark">YAO</span>
+    <p class="hero-location">TODOS SANTOS &nbsp;·&nbsp; B.C.S</p>
+    <p class="hero-line">The only vinyl listening bar with contemporary Japanese cuisine in Baja California Sur</p>
+    <a href="#reserve" class="hero-btn">RESERVE</a>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mq-item"><span class="mq-dot"></span>IZAKAYA</span>
+    <span class="mq-item"><span class="mq-dot"></span>OMAKASE</span>
+    <span class="mq-item"><span class="mq-dot"></span>VINYL</span>
+    <span class="mq-item"><span class="mq-dot"></span>TODOS SANTOS B.C.S</span>
+    <span class="mq-item"><span class="mq-dot"></span>TUE – SAT · 5 TO 10PM</span>
+    <span class="mq-item"><span class="mq-dot"></span>居酒屋</span>
+    <span class="mq-item"><span class="mq-dot"></span>IZAKAYA</span>
+    <span class="mq-item"><span class="mq-dot"></span>OMAKASE</span>
+    <span class="mq-item"><span class="mq-dot"></span>VINYL</span>
+    <span class="mq-item"><span class="mq-dot"></span>TODOS SANTOS B.C.S</span>
+    <span class="mq-item"><span class="mq-dot"></span>TUE – SAT · 5 TO 10PM</span>
+    <span class="mq-item"><span class="mq-dot"></span>居酒屋</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-bg"></div>
+  <div class="about-inner container">
+    <div class="about-grid">
+      <div class="kanji-stack rv">
+        <div class="kanji-row"><span class="kanji-char">居</span><span class="kanji-label">Izakaya /</span></div>
+        <div class="kanji-row"><span class="kanji-char">酒</span><span class="kanji-label">Omakase /</span></div>
+        <div class="kanji-row"><span class="kanji-char">屋</span><span class="kanji-label">Music /</span></div>
+      </div>
+      <div class="about-text rv">
+        <div class="section-label">YAO / TODOS SANTOS, B.C.S</div>
+        <h2>A place for<br>music lovers<br>& <em>food people</em></h2>
+        <p>YAO is an izakaya and vinyl listening bar in Todos Santos, Baja California Sur. Contemporary Asian kitchen, curated records, and a program of resident DJs and guest artists pushing the local scene forward.</p>
+        <p>Not a restaurant with music. Not a bar with food. Something without a clean category — and that's exactly the point.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section class="hours">
+  <div class="container">
+    <div class="hours-inner rv">
+      <div>
+        <div class="section-label">Opening Hours</div>
+        <p style="font-size:10px;font-weight:200;letter-spacing:2px;color:var(--white-faint);text-transform:uppercase;margin-top:8px;">Todos Santos, B.C.S</p>
+      </div>
+      <div class="hours-days">
+        <div class="hday"><p class="hday-name">MON</p><p class="hday-time">Closed</p></div>
+        <div class="hday open"><p class="hday-name">TUE</p><p class="hday-time">5–10<span style="font-size:8px;">PM</span></p></div>
+        <div class="hday open"><p class="hday-name">WED</p><p class="hday-time">5–10<span style="font-size:8px;">PM</span></p></div>
+        <div class="hday omakase"><p class="hday-name">THU</p><p class="hday-time">5–10<span style="font-size:8px;">PM</span></p><p class="hday-sub">Omakase</p></div>
+        <div class="hday open"><p class="hday-name">FRI</p><p class="hday-time">5–10<span style="font-size:8px;">PM</span></p></div>
+        <div class="hday open"><p class="hday-name">SAT</p><p class="hday-time">5–10<span style="font-size:8px;">PM</span></p></div>
+        <div class="hday"><p class="hday-name">SUN</p><p class="hday-time">Closed</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE ROW -->
+<div class="image-row">
+  <div class="img-panel"><img src="images/the-bar.jpg" alt="The Bar" loading="lazy"><div class="img-panel-overlay"></div><span class="ip-label">THE BAR</span></div>
+  <div class="img-panel"><img src="images/vinyl-sessions.jpg" alt="Vinyl Sessions" loading="lazy"><div class="img-panel-overlay"></div><span class="ip-label">VINYL SESSIONS</span></div>
+  <div class="img-panel"><img src="images/the-kitchen.jpg" alt="The Kitchen" loading="lazy"><div class="img-panel-overlay"></div><span class="ip-label">THE KITCHEN</span></div>
+</div>
+
+<!-- OMAKASE -->
+<section class="omakase" id="omakase">
+  <div class="container">
+    <div class="omakase-hd rv">
+      <div class="section-title"><span>EXPERIENCES</span>OMAKASE<br>& EVENTS</div>
+      <p class="omakase-note">Advance reservation<br>required for all<br>omakase experiences</p>
+    </div>
+
+    <div class="omakase-intro rv">
+      <div class="omakase-intro-img">
+        <img src="images/omakase-exp.jpg" alt="Omakase Experience" loading="lazy">
+      </div>
+      <div class="omakase-intro-text">
+        <p class="section-label">The Experience</p>
+        <h3>Curated.<br>Intimate.<br>Unrepeatable.</h3>
+        <p>Every omakase at YAO is a single sitting — a conversation between the kitchen, the vinyl, and the people at the bar. No two nights are the same. Japanese technique, Baja ingredients, and a soundtrack chosen by hand.</p>
+      </div>
+    </div>
+
+    <div class="reviews rv">
+      <div class="review-card">
+        <p class="review-stars">★★★★★ &nbsp; Google Review</p>
+        <p class="review-text">"One of the best meals we have ever had. A front row view of the chefs preparing course after course — a Michelin star worthy performance. Hit after hit with oysters, scallops, pork jowl, and wagyu. The cocktail pairing starting with a welcome drink on the rooftop at sunset was perfect."</p>
+        <p class="review-author">— Scott Sichler</p>
+      </div>
+      <div class="review-card">
+        <p class="review-stars">★★★★★ &nbsp; Google Review</p>
+        <p class="review-text">"Thoughtful from start to finish — creative without being overcomplicated. The ginger coconut kampachi was rich and silky, the ikura with citrus ponzu bright and clean, and the grilled pork jowl unforgettable. One guest said it was the best dining experience she's had in ten years living in Todos Santos. That didn't feel like an exaggeration."</p>
+        <p class="review-author">— Hidden Leaf Baja</p>
+      </div>
+    </div>
+
+    <div class="ocards rv">
+      <div class="ocard feat">
+        <div class="ocard-bg"><img src="images/omakase-bar.jpg" alt="" loading="lazy"></div>
+        <div class="ocard-body">
+          <div class="ocard-idx">01 / CLASSIC OMAKASE · EVERY THURSDAY</div>
+          <h3>Classic Omakase</h3>
+          <p class="ocard-sub">Japanese techniques, contemporary vision & Baja ingredients</p>
+          <p>8 courses. 12 seats. One sitting. We take over the kitchen every Thursday — our interpretation of Asian cuisine through a Baja lens, with vinyl soundtrack.</p>
+          <div class="ocard-price-grid">
+            <div><strong>$125 USD</strong><span>8 courses · no pairing</span></div>
+            <div><strong>$165 USD</strong><span>8 courses · pairing included</span></div>
+          </div>
+          <a href="#reserve" class="ocard-cta">Reserve your seat</a>
+        </div>
+      </div>
+      <div class="ocard">
+        <div class="ocard-bg"><img src="images/omakase-chef.jpg" alt="" loading="lazy"></div>
+        <div class="ocard-body">
+          <div class="ocard-idx">02 / SIGNATURE OMAKASE · PRIVATE</div>
+          <h3>Signature Omakase</h3>
+          <p class="ocard-sub">Your occasion</p>
+          <p>A fully private omakase for groups of 6–12. Customized menu, curated vinyl selection, the whole space to yourselves. Birthdays, anniversaries, corporate retreats.</p>
+          <div class="ocard-price">
+            <strong>$195 USD</strong>
+            <span>12 courses · pairing included · min. 6 guests</span>
+          </div>
+          <a href="#reserve" class="ocard-cta">Inquire</a>
+        </div>
+      </div>
+      <div class="ocard">
+        <div class="ocard-bg"><img src="images/table-full.jpg" alt="" loading="lazy"></div>
+        <div class="ocard-body">
+          <div class="ocard-idx">03 / WE COME TO YOU</div>
+          <h3>Omakase<br>at Your Place</h3>
+          <p class="ocard-sub">Todos Santos · El Pescadero · Cabo · San José · La Paz</p>
+          <p>YAO brings the full omakase experience to your villa, estate, or event space. Weddings, retreats, private gatherings — wherever you are in BCS.</p>
+          <div class="ocard-price">
+            <strong style="font-size:18px;letter-spacing:3px;">GET A QUOTE</strong>
+            <span>Custom pricing · all locations · full setup included</span>
+          </div>
+          <a href="#reserve" class="ocard-cta">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="food-strip">
+    <div><img src="images/izakaya-menu.jpg" alt="Noodles" loading="lazy"></div>
+    <div><img src="images/edamame.jpg" alt="Edamame" loading="lazy"></div>
+    <div><img src="images/gyoza-pan.jpg" alt="Gyoza" loading="lazy"></div>
+    <div><img src="images/steamer.jpg" alt="Steamer" loading="lazy"></div>
+    <div><img src="images/gyoza-plate.jpg" alt="Gyoza plate" loading="lazy"></div>
+  </div>
+  <div class="container">
+    <div class="menu-hd rv">
+      <div class="section-label">IZAKAYA MENU</div>
+      <div class="section-title">THE MENU</div>
+    </div>
+    <div class="menu-grid">
+      <div class="mcat rv">
+        <div class="mcat-label">/STARTERS</div>
+        <div class="mitem"><div><h4>Wonton Tuna Spicy</h4><p>2 pzas</p></div><span class="mitem-price">$210</span></div>
+        <div class="mitem"><div><h4>Wonton Tuna Truffled Tartar</h4><p>2 pzas</p></div><span class="mitem-price">$310</span></div>
+        <div class="mitem"><div><h4>Bao Bun Pulled Pork</h4></div><span class="mitem-price">$170</span></div>
+        <div class="mitem"><div><h4>Miso Soup</h4></div><span class="mitem-price">$180</span></div>
+        <div class="mitem"><div><h4>Edamame</h4><p>Sea salt or spicy</p></div><span class="mitem-price">$170</span></div>
+      </div>
+      <div class="mcat rv">
+        <div class="mcat-label">/BITES</div>
+        <div class="mitem"><div><h4>Cauliflower Miso Wings</h4></div><span class="mitem-price">$170</span></div>
+        <div class="mitem"><div><h4>Pork Gyozas</h4></div><span class="mitem-price">$170</span></div>
+      </div>
+      <div class="mcat rv">
+        <div class="mcat-label">/SIDES</div>
+        <div class="mitem"><div><h4>Seaweed Salad</h4></div><span class="mitem-price">$130</span></div>
+        <div class="mitem"><div><h4>Gohan Rice</h4></div><span class="mitem-price">$70</span></div>
+      </div>
+      <div class="mcat rv">
+        <div class="mcat-label">/SPECIALS</div>
+        <div class="mitem"><div><h4>Honey Garlic Chicken</h4></div><span class="mitem-price">$230</span></div>
+        <div class="mitem"><div><h4>Chashu Don</h4></div><span class="mitem-price">$270</span></div>
+        <div class="mitem"><div><h4>Yakisoba · Chicken / Tofu</h4></div><span class="mitem-price">$270</span></div>
+        <div class="mitem"><div><h4>Yakisoba · Camarón / Black</h4></div><span class="mitem-price">$360</span></div>
+        <div class="mitem"><div><h4>Shoyu Ramen</h4></div><span class="mitem-price">$280</span></div>
+      </div>
+      <div class="mcat rv">
+        <div class="mcat-label">/HANDROLLS</div>
+        <div class="mitem"><div><h4>Handroll Tuna Spicy</h4></div><span class="mitem-price">$140</span></div>
+        <div class="mitem"><div><h4>Handroll YAO</h4></div><span class="mitem-price">$180</span></div>
+        <div class="mitem"><div><h4>Handroll of the Day</h4></div><span class="mitem-price">$230</span></div>
+      </div>
+      <div class="mcat rv">
+        <div class="mcat-label">/DESSERT</div>
+        <div class="mitem"><div><h4>Yuzu Gelato</h4><p>Lime zest, calpis cream</p></div><span class="mitem-price">$170</span></div>
+      </div>
+    </div>
+
+    <div class="drinks-grid rv">
+      <div class="drinks-col">
+        <div class="mcat-label">/NON-ALCOHOLIC</div>
+        <div class="mitem"><div><h4>Jasmin Tea</h4></div><span class="mitem-price">$60</span></div>
+        <div class="mitem"><div><h4>Calpis</h4></div><span class="mitem-price">$60</span></div>
+        <div class="mitem"><div><h4>Sparkling Water</h4></div><span class="mitem-price">$50</span></div>
+        <div class="mitem"><div><h4>Ginger Beer</h4></div><span class="mitem-price">$120</span></div>
+        <div class="mitem"><div><h4>Yuzu Ginger Keffir</h4></div><span class="mitem-price">$160</span></div>
+      </div>
+      <div class="drinks-col">
+        <div class="mcat-label">/SAKE & COCKTAILS</div>
+        <div class="mitem"><div><h4>Sake Selection</h4><p>Junmai, Ginjo, Daiginjo</p></div><span class="mitem-price">Ask</span></div>
+        <div class="mitem"><div><h4>Seasonal Cocktails</h4><p>Rotating menu</p></div><span class="mitem-price">Ask</span></div>
+        <div class="mitem"><div><h4>Natural Wine</h4><p>Curated weekly</p></div><span class="mitem-price">Ask</span></div>
+      </div>
+      <div class="drinks-col">
+        <div class="mcat-label">/SPIRITS</div>
+        <div class="mitem"><div><h4>Destilados Mexicanos</h4><p>Mezcal, raicilla, tequila & more</p></div><span class="mitem-price">Ask</span></div>
+      </div>
+    </div>
+
+    <p class="menu-note">Prices in MXN · Seasonal menu · Full menu available at the bar</p>
+  </div>
+</section>
+
+<!-- STATEMENT IMAGE -->
+<div class="statement">
+  <img src="images/statement.jpg" alt="YAO BAJA" loading="lazy">
+  <div class="statement-vignette"></div>
+  <p class="statement-tag">YAO / IZAKAYA / OMAKASE / MUSIC · TODOS SANTOS B.C.S</p>
+</div>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="container">
+    <div class="events-hd rv">
+      <div class="section-title"><span>WHAT'S ON</span>UPCOMING<br>EVENTS</div>
+      <p style="font-size:11px;font-weight:200;letter-spacing:2px;color:var(--white-dim);text-transform:uppercase;text-align:right;max-width:200px;line-height:1.9;">Reserve via WhatsApp<br>or at the door</p>
+    </div>
+
+    <!-- WEEKLY RECURRING -->
+    <div class="rv">
+      <p style="font-size:9px;font-weight:200;letter-spacing:4px;text-transform:uppercase;color:var(--white-faint);padding-bottom:16px;border-bottom:1px solid var(--white-ghost);margin-bottom:0;">Every Week</p>
+
+      <div class="erow">
+        <div><div class="eday" style="font-size:28px;letter-spacing:1px;">TUE</div><div class="emonth">Weekly</div></div>
+        <span class="etag">Izakaya</span>
+        <div class="einfo">
+          <h4>Regular Service</h4>
+          <p>Full izakaya menu · Vinyl soundtrack · 5PM – 10PM</p>
+        </div>
+        <span class="earrow">→</span>
+      </div>
+
+      <div class="erow">
+        <div><div class="eday" style="font-size:28px;letter-spacing:1px;">WED</div><div class="emonth">Weekly</div></div>
+        <span class="etag">Izakaya</span>
+        <div class="einfo">
+          <h4>Regular Service</h4>
+          <p>Full izakaya menu · Vinyl soundtrack · 5PM – 10PM</p>
+        </div>
+        <span class="earrow">→</span>
+      </div>
+
+      <div class="erow" style="border-left:2px solid var(--red);padding-left:16px;margin-left:-18px;">
+        <div><div class="eday" style="font-size:28px;letter-spacing:1px;">THU</div><div class="emonth">Weekly</div></div>
+        <span class="etag" style="background:var(--red);color:var(--black);border-color:var(--red);">Omakase</span>
+        <div class="einfo">
+          <h4>Thursday Omakase Night</h4>
+          <p>8 courses · 12 seats only · $125 USD / $165 USD with pairing · Reservation required</p>
+        </div>
+        <a href="#reserve" style="font-size:9px;font-weight:200;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--red);padding:8px 16px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Reserve</a>
+      </div>
+
+      <div class="erow">
+        <div><div class="eday" style="font-size:28px;letter-spacing:1px;">FRI</div><div class="emonth">Weekly</div></div>
+        <span class="etag">Izakaya</span>
+        <div class="einfo">
+          <h4>Regular Service</h4>
+          <p>Full izakaya menu · Vinyl soundtrack · 5PM – 10PM</p>
+        </div>
+        <span class="earrow">→</span>
+      </div>
+
+      <div class="erow">
+        <div><div class="eday" style="font-size:28px;letter-spacing:1px;">SAT</div><div class="emonth">Weekly</div></div>
+        <span class="etag">DJ Night</span>
+        <div class="einfo">
+          <h4>Izakaya DJ Night</h4>
+          <p>Resident & guest DJs · Full menu · Walk-ins welcome · 5PM – 10PM</p>
+        </div>
+        <span class="earrow">→</span>
+      </div>
+    </div>
+
+    <!-- SPECIAL EVENTS -->
+    <div class="rv" style="margin-top:48px;">
+      <p style="font-size:9px;font-weight:200;letter-spacing:4px;text-transform:uppercase;color:var(--white-faint);padding-bottom:16px;border-bottom:1px solid var(--white-ghost);margin-bottom:0;">Special Events</p>
+
+      <div class="erow" style="border-left:2px solid var(--red);padding-left:16px;margin-left:-18px;">
+        <div><div class="eday">07</div><div class="emonth">May</div></div>
+        <span class="etag" style="background:var(--red);color:var(--black);border-color:var(--red);">Omakase</span>
+        <div class="einfo">
+          <h4>Omakase — YAO Invites Alberto Collarte</h4>
+          <p>12 course dinner · Guest chef collaboration · Limited seats · Reservation required</p>
+        </div>
+        <a href="#reserve" style="font-size:9px;font-weight:200;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--red);padding:8px 16px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Reserve</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="reserve-bg"></div>
+  <div class="container">
+    <div class="reserve-in rv">
+      <p class="reserve-eyebrow">Make a reservation</p>
+      <h2>RESERVE</h2>
+      <div class="ropts">
+        <button class="ropt on" onclick="setR(this)">Dinner Table</button>
+        <button class="ropt" onclick="setR(this)">Thursday Omakase</button>
+        <button class="ropt" onclick="setR(this)">Private Event</button>
+        <button class="ropt" onclick="setR(this)">Catering</button>
+      </div>
+      <div class="rctas">
+        <a href="https://wa.me/526122017135" class="cta-p" target="_blank">WhatsApp</a>
+        <a href="mailto:yaobaja@gmail.com" class="cta-o">Email Us</a>
+        <a href="#" class="cta-o">OpenTable</a>
+      </div>
+      <p class="reserve-note">Walk-ins welcome when available &nbsp;·&nbsp; Reservations always guaranteed</p>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="info-section" id="info">
+  <div class="container">
+    <div class="info-grid">
+      <div class="icol rv">
+        <label>Location</label>
+        <p>Todos Santos<br>Baja California Sur<br>México</p>
+      </div>
+      <div class="icol rv">
+        <label>Hours</label>
+        <p>Tue – Sat: 5PM – 10PM<br>Mon & Sun: Closed</p>
+        <a href="#omakase" class="red-link">Thursday Omakase night ↗</a>
+      </div>
+      <div class="icol rv">
+        <label>Contact</label>
+        <a href="https://wa.me/526122017135">+52 612 201 71 35</a>
+        <a href="mailto:yaobaja@gmail.com">yaobaja@gmail.com</a>
+        <a href="https://www.instagram.com/yao.baja/" target="_blank">@yao.baja</a>
+      </div>
+      <div class="icol rv">
+        <label>Getting Here</label>
+        <p>1 hr from Los Cabos SJD<br>45 min from La Paz</p>
+        <a href="https://maps.google.com/?q=Todos+Santos+BCS" target="_blank" class="red-link">Open in Maps →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-in">
+      <span class="footer-logo">YAO · 居酒屋</span>
+      <span class="footer-mid">IZAKAYA / OMAKASE / MUSIC · TODOS SANTOS B.C.S</span>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/yao.baja/" target="_blank">Instagram</a>
+        <a href="#omakase">Omakase</a>
+        <a href="#reserve">Reserve</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function setR(el) {
+    document.querySelectorAll('.ropt').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+  }
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+  }
+  const obs = new IntersectionObserver((es) => {
+    es.forEach((e, i) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.rv').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 0.07 + 's';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
