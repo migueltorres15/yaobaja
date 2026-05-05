@@ -420,10 +420,8 @@
 
   /* ── REVEAL ANIMATION ── */
   .rv { opacity:0; transform:translateY(20px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  @media (max-width:768px) { .rv { opacity:1 !important; transform:none !important; transition:none !important; } }
   .rv.in { opacity:1; transform:none; }
-  @media (max-width:768px) {
-    .rv { opacity:1 !important; transform:none !important; }
-  }
 
   /* ── MOBILE NAV ── */
   .nav-burger {
@@ -579,12 +577,12 @@
   <div class="about-bg"></div>
   <div class="about-inner container">
     <div class="about-grid">
-      <div class="kanji-stack">>
+      <div class="kanji-stack rv">
         <div class="kanji-row"><span class="kanji-char">居</span><span class="kanji-label">Izakaya /</span></div>
         <div class="kanji-row"><span class="kanji-char">酒</span><span class="kanji-label">Omakase /</span></div>
         <div class="kanji-row"><span class="kanji-char">屋</span><span class="kanji-label">Music /</span></div>
       </div>
-      <div class="about-text">>
+      <div class="about-text rv">
         <div class="section-label">YAO / TODOS SANTOS, B.C.S</div>
         <h2>A place for<br>music lovers<br>& <em>food people</em></h2>
         <p>YAO is an izakaya and vinyl listening bar in Todos Santos, Baja California Sur. Contemporary Asian kitchen, curated records, and a program of resident DJs and guest artists pushing the local scene forward.</p>
@@ -597,7 +595,7 @@
 <!-- HOURS -->
 <section class="hours">
   <div class="container">
-    <div class="hours-inner">>
+    <div class="hours-inner rv">
       <div>
         <div class="section-label">Opening Hours</div>
         <p style="font-size:10px;font-weight:200;letter-spacing:2px;color:var(--white-faint);text-transform:uppercase;margin-top:8px;">Todos Santos, B.C.S</p>
@@ -625,12 +623,12 @@
 <!-- OMAKASE -->
 <section class="omakase" id="omakase">
   <div class="container">
-    <div class="omakase-hd">>
+    <div class="omakase-hd rv">
       <div class="section-title"><span>EXPERIENCES</span>OMAKASE<br>& EVENTS</div>
       <p class="omakase-note">Advance reservation<br>required for all<br>omakase experiences</p>
     </div>
 
-    <div class="omakase-intro">>
+    <div class="omakase-intro rv">
       <div class="omakase-intro-img">
         <img src="images/omakase-exp.jpg" alt="Omakase Experience" loading="lazy">
       </div>
@@ -641,7 +639,7 @@
       </div>
     </div>
 
-    <div class="reviews">>
+    <div class="reviews rv">
       <div class="review-card">
         <p class="review-stars">★★★★★ &nbsp; Google Review</p>
         <p class="review-text">"One of the best meals we have ever had. A front row view of the chefs preparing course after course — a Michelin star worthy performance. Hit after hit with oysters, scallops, pork jowl, and wagyu. The cocktail pairing starting with a welcome drink on the rooftop at sunset was perfect."</p>
@@ -654,7 +652,7 @@
       </div>
     </div>
 
-    <div class="ocards">>
+    <div class="ocards rv">
       <div class="ocard feat">
         <div class="ocard-bg"><img src="images/omakase-bar.jpg" alt="" loading="lazy"></div>
         <div class="ocard-body">
@@ -711,12 +709,12 @@
     <div><img src="images/gyoza-plate.jpg" alt="Gyoza plate" loading="lazy"></div>
   </div>
   <div class="container">
-    <div class="menu-hd">>
+    <div class="menu-hd rv">
       <div class="section-label">IZAKAYA MENU</div>
       <div class="section-title">THE MENU</div>
     </div>
     <div class="menu-grid">
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/STARTERS</div>
         <div class="mitem"><div><h4>Wonton Tuna Spicy</h4><p>2 pzas</p></div><span class="mitem-price">$210</span></div>
         <div class="mitem"><div><h4>Wonton Tuna Truffled Tartar</h4><p>2 pzas</p></div><span class="mitem-price">$310</span></div>
@@ -724,17 +722,17 @@
         <div class="mitem"><div><h4>Miso Soup</h4></div><span class="mitem-price">$180</span></div>
         <div class="mitem"><div><h4>Edamame</h4><p>Sea salt or spicy</p></div><span class="mitem-price">$170</span></div>
       </div>
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/BITES</div>
         <div class="mitem"><div><h4>Cauliflower Miso Wings</h4></div><span class="mitem-price">$170</span></div>
         <div class="mitem"><div><h4>Pork Gyozas</h4></div><span class="mitem-price">$170</span></div>
       </div>
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/SIDES</div>
         <div class="mitem"><div><h4>Seaweed Salad</h4></div><span class="mitem-price">$130</span></div>
         <div class="mitem"><div><h4>Gohan Rice</h4></div><span class="mitem-price">$70</span></div>
       </div>
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/SPECIALS</div>
         <div class="mitem"><div><h4>Honey Garlic Chicken</h4></div><span class="mitem-price">$230</span></div>
         <div class="mitem"><div><h4>Chashu Don</h4></div><span class="mitem-price">$270</span></div>
@@ -742,19 +740,19 @@
         <div class="mitem"><div><h4>Yakisoba · Camarón / Black</h4></div><span class="mitem-price">$360</span></div>
         <div class="mitem"><div><h4>Shoyu Ramen</h4></div><span class="mitem-price">$280</span></div>
       </div>
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/HANDROLLS</div>
         <div class="mitem"><div><h4>Handroll Tuna Spicy</h4></div><span class="mitem-price">$140</span></div>
         <div class="mitem"><div><h4>Handroll YAO</h4></div><span class="mitem-price">$180</span></div>
         <div class="mitem"><div><h4>Handroll of the Day</h4></div><span class="mitem-price">$230</span></div>
       </div>
-      <div class="mcat">>
+      <div class="mcat rv">
         <div class="mcat-label">/DESSERT</div>
         <div class="mitem"><div><h4>Yuzu Gelato</h4><p>Lime zest, calpis cream</p></div><span class="mitem-price">$170</span></div>
       </div>
     </div>
 
-    <div class="drinks-grid">>
+    <div class="drinks-grid rv">
       <div class="drinks-col">
         <div class="mcat-label">/NON-ALCOHOLIC</div>
         <div class="mitem"><div><h4>Jasmin Tea</h4></div><span class="mitem-price">$60</span></div>
@@ -789,13 +787,13 @@
 <!-- EVENTS -->
 <section class="events" id="events">
   <div class="container">
-    <div class="events-hd">>
+    <div class="events-hd rv">
       <div class="section-title"><span>WHAT'S ON</span>UPCOMING<br>EVENTS</div>
       <p style="font-size:11px;font-weight:200;letter-spacing:2px;color:var(--white-dim);text-transform:uppercase;text-align:right;max-width:200px;line-height:1.9;">Reserve via WhatsApp<br>or at the door</p>
     </div>
 
     <!-- WEEKLY RECURRING -->
-    <div class="">
+    <div class="rv">
       <p style="font-size:9px;font-weight:200;letter-spacing:4px;text-transform:uppercase;color:var(--white-faint);padding-bottom:16px;border-bottom:1px solid var(--white-ghost);margin-bottom:0;">Every Week</p>
 
       <div class="erow">
@@ -850,7 +848,7 @@
     </div>
 
     <!-- SPECIAL EVENTS -->
-    <div class="" style="margin-top:48px;">
+    <div class="rv" style="margin-top:48px;">
       <p style="font-size:9px;font-weight:200;letter-spacing:4px;text-transform:uppercase;color:var(--white-faint);padding-bottom:16px;border-bottom:1px solid var(--white-ghost);margin-bottom:0;">Special Events</p>
 
       <div class="erow" style="border-left:2px solid var(--red);padding-left:16px;margin-left:-18px;">
@@ -871,7 +869,7 @@
 <section class="reserve" id="reserve">
   <div class="reserve-bg"></div>
   <div class="container">
-    <div class="reserve-in">>
+    <div class="reserve-in rv">
       <p class="reserve-eyebrow">Make a reservation</p>
       <h2>RESERVE</h2>
       <div class="ropts">
@@ -894,22 +892,22 @@
 <section class="info-section" id="info">
   <div class="container">
     <div class="info-grid">
-      <div class="icol">>
+      <div class="icol rv">
         <label>Location</label>
         <p>Todos Santos<br>Baja California Sur<br>México</p>
       </div>
-      <div class="icol">>
+      <div class="icol rv">
         <label>Hours</label>
         <p>Tue – Sat: 5PM – 10PM<br>Mon & Sun: Closed</p>
         <a href="#omakase" class="red-link">Thursday Omakase night ↗</a>
       </div>
-      <div class="icol">>
+      <div class="icol rv">
         <label>Contact</label>
         <a href="https://wa.me/526122017135">+52 612 201 71 35</a>
         <a href="mailto:yaobaja@gmail.com">yaobaja@gmail.com</a>
         <a href="https://www.instagram.com/yao.baja/" target="_blank">@yao.baja</a>
       </div>
-      <div class="icol">>
+      <div class="icol rv">
         <label>Getting Here</label>
         <p>1 hr from Los Cabos SJD<br>45 min from La Paz</p>
         <a href="https://maps.google.com/?q=Todos+Santos+BCS" target="_blank" class="red-link">Open in Maps →</a>
@@ -942,12 +940,12 @@
     document.getElementById('mobileMenu').classList.toggle('open');
     document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
   }
-  const obs = new IntersectionObserver((es) => {
-    es.forEach((e, i) => {
-      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
   if (window.innerWidth > 768) {
+    const obs = new IntersectionObserver((es) => {
+      es.forEach((e, i) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
     document.querySelectorAll('.rv').forEach((el, i) => {
       el.style.transitionDelay = (i % 3) * 0.07 + 's';
       obs.observe(el);
