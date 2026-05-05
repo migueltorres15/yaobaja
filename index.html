@@ -421,6 +421,9 @@
   /* ── REVEAL ANIMATION ── */
   .rv { opacity:0; transform:translateY(20px); transition:opacity 0.65s ease, transform 0.65s ease; }
   .rv.in { opacity:1; transform:none; }
+  @media (max-width:768px) {
+    .rv { opacity:1 !important; transform:none !important; }
+  }
 
   /* ── MOBILE NAV ── */
   .nav-burger {
