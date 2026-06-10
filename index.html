@@ -78,8 +78,12 @@
   .hero-wordmark { font-size:clamp(88px,13vw,164px); font-weight:100; letter-spacing:28px; color:var(--white); text-transform:uppercase; line-height:1; margin-bottom:20px; }
   .hero-location { font-size:11px; font-weight:200; letter-spacing:4px; color:var(--white-dim); text-transform:uppercase; margin-bottom:36px; }
   .hero-line { font-size:13px; font-weight:200; letter-spacing:1.5px; color:rgba(245,243,239,0.6); max-width:540px; line-height:1.8; margin-bottom:40px; font-style:italic; }
-  .hero-btn { font-size:11px; font-weight:300; letter-spacing:4px; text-transform:uppercase; color:var(--black); background:var(--red); padding:16px 52px; text-decoration:none; transition:opacity 0.2s; }
+  .hero-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .hero-btn { font-size:11px; font-weight:300; letter-spacing:4px; text-transform:uppercase; padding:16px 52px; text-decoration:none; transition:opacity 0.2s; }
   .hero-btn:hover { opacity:0.85; }
+  .hero-btn-delivery { color:var(--black); background:var(--red); }
+  .hero-btn-reserve { color:var(--white); background:transparent; border:1px solid rgba(245,243,239,0.3); }
+  .hero-btn-reserve:hover { border-color:rgba(245,243,239,0.7); opacity:1; }
   .hero-scroll { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; animation:hbreathe 3s ease-in-out infinite; }
   @keyframes hbreathe { 0%,100%{opacity:0.25;} 50%{opacity:0.55;} }
   .hero-scroll span { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--white-dim); }
@@ -505,6 +509,7 @@
       <li><a href="#menu">Menu</a></li>
       <li><a href="#events">Events</a></li>
       <li><a href="#info">Find Us</a></li>
+      <li><a href="https://yao-delivery.vercel.app" target="_blank" style="color:var(--red);">Delivery</a></li>
     </ul>
     <a href="#reserve" class="nav-reserve">Reserve</a>
     <button class="nav-burger" onclick="toggleMenu()" aria-label="Menu">
@@ -548,7 +553,10 @@
     <span class="hero-wordmark">YAO</span>
     <p class="hero-location">TODOS SANTOS &nbsp;·&nbsp; B.C.S</p>
     <p class="hero-line">The only vinyl listening bar with contemporary Japanese cuisine in Baja California Sur</p>
-    <a href="#reserve" class="hero-btn">RESERVE</a>
+    <div class="hero-btns">
+      <a href="https://yao-delivery.vercel.app" class="hero-btn hero-btn-delivery" target="_blank">ORDER DELIVERY</a>
+      <a href="#reserve" class="hero-btn hero-btn-reserve">RESERVE</a>
+    </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
 </section>
@@ -561,12 +569,14 @@
     <span class="mq-item"><span class="mq-dot"></span>VINYL</span>
     <span class="mq-item"><span class="mq-dot"></span>TODOS SANTOS B.C.S</span>
     <span class="mq-item"><span class="mq-dot"></span>TUE – SAT · 5 TO 10PM</span>
+    <span class="mq-item"><span class="mq-dot"></span>DELIVERY AVAILABLE</span>
     <span class="mq-item"><span class="mq-dot"></span>居酒屋</span>
     <span class="mq-item"><span class="mq-dot"></span>IZAKAYA</span>
     <span class="mq-item"><span class="mq-dot"></span>OMAKASE</span>
     <span class="mq-item"><span class="mq-dot"></span>VINYL</span>
     <span class="mq-item"><span class="mq-dot"></span>TODOS SANTOS B.C.S</span>
     <span class="mq-item"><span class="mq-dot"></span>TUE – SAT · 5 TO 10PM</span>
+    <span class="mq-item"><span class="mq-dot"></span>DELIVERY AVAILABLE</span>
     <span class="mq-item"><span class="mq-dot"></span>居酒屋</span>
   </div>
 </div>
