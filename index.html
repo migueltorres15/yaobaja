@@ -226,6 +226,15 @@
   .einfo p { font-size:11px; font-weight:200; letter-spacing:1px; color:var(--white-dim); }
   .earrow { color:var(--white-faint); font-size:18px; }
 
+  /* ── RESERVATION MODAL ── */
+  .rmodal { position:fixed; inset:0; z-index:1000; display:none; align-items:center; justify-content:center; background:rgba(8,8,7,0.82); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+  .rmodal.open { display:flex; }
+  .rmodal-box { position:relative; width:min(600px, 100%); height:min(860px, 100%); background:var(--black); border:1px solid var(--white-faint); }
+  .rmodal-box iframe { width:100%; height:100%; border:0; display:block; background:var(--black); }
+  .rmodal-x { position:absolute; top:10px; right:10px; z-index:2; width:40px; height:40px; background:transparent; border:1px solid var(--white-faint); color:var(--white); font-size:20px; font-weight:200; cursor:pointer; line-height:1; }
+  .rmodal-x:hover { border-color:var(--red); color:var(--red); }
+  @media (max-width:640px) { .rmodal-box { width:100%; height:100%; border:0; } }
+
   /* ── RESERVE ── */
   .reserve { padding:160px 0; text-align:center; position:relative; overflow:hidden; }
   .reserve-bg { position:absolute; inset:0; background-image:url('images/reserve-bg.jpg'); background-size:cover; background-position:center; }
@@ -555,7 +564,7 @@
     <p class="hero-line">The only vinyl listening bar with contemporary Japanese cuisine in Baja California Sur</p>
     <div class="hero-btns">
       <a href="https://yao-delivery.vercel.app" class="hero-btn hero-btn-delivery" target="_blank">ORDER DELIVERY</a>
-      <a href="#reserve" class="hero-btn hero-btn-reserve">RESERVE</a>
+      <a href="#reserve" class="hero-btn hero-btn-reserve" data-reserva="mesa">RESERVE</a>
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div><span>Scroll</span></div>
@@ -670,10 +679,10 @@
           <p class="ocard-sub">Japanese techniques, contemporary vision & Baja ingredients</p>
           <p>8 courses. 12 seats. One sitting. We take over the kitchen every Thursday — our interpretation of Asian cuisine through a Baja lens, with vinyl soundtrack.</p>
           <div class="ocard-price-grid">
-            <div><strong>$125 USD</strong><span>8 courses · no pairing</span></div>
-            <div><strong>$165 USD</strong><span>8 courses · pairing included</span></div>
+            <div><strong>$1,300 MXN</strong><span>8 courses · no pairing</span></div>
+            <div><strong>$1,650 MXN</strong><span>8 courses · pairing included</span></div>
           </div>
-          <a href="#reserve" class="ocard-cta">Reserve your seat</a>
+          <a href="#reserve" class="ocard-cta" data-reserva="omakase">Reserve your seat</a>
         </div>
       </div>
       <div class="ocard">
@@ -830,9 +839,9 @@
         <span class="etag" style="background:var(--red);color:var(--black);border-color:var(--red);">Omakase</span>
         <div class="einfo">
           <h4>Thursday Omakase Night</h4>
-          <p>8 courses · 12 seats only · $125 USD / $165 USD with pairing · Reservation required</p>
+          <p>8 courses · 12 seats only · $1,300 MXN / $1,650 MXN with pairing · Book &amp; pay online</p>
         </div>
-        <a href="#reserve" style="font-size:9px;font-weight:200;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--red);padding:8px 16px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Reserve</a>
+        <a href="#reserve" data-reserva="omakase" style="font-size:9px;font-weight:200;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--red);padding:8px 16px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Reserve</a>
       </div>
 
       <div class="erow">
@@ -882,17 +891,17 @@
       <p class="reserve-eyebrow">Make a reservation</p>
       <h2>RESERVE</h2>
       <div class="ropts">
-        <button class="ropt on" onclick="setR(this)">Dinner Table</button>
-        <button class="ropt" onclick="setR(this)">Thursday Omakase</button>
-        <button class="ropt" onclick="setR(this)">Private Event</button>
-        <button class="ropt" onclick="setR(this)">Catering</button>
+        <button class="ropt on" data-r="mesa" onclick="setR(this)">Dinner Table</button>
+        <button class="ropt" data-r="omakase" onclick="setR(this)">Thursday Omakase</button>
+        <button class="ropt" data-r="privado" onclick="setR(this)">Private Event</button>
+        <button class="ropt" data-r="privado" onclick="setR(this)">Catering</button>
       </div>
       <div class="rctas">
-        <a href="https://wa.me/526122017135" class="cta-p" target="_blank">WhatsApp</a>
+        <a href="#reserve" class="cta-p" id="rBook" data-reserva="mesa">Book a table</a>
+        <a href="https://wa.me/526122017135" class="cta-o" id="rWa" target="_blank">WhatsApp</a>
         <a href="mailto:yaobaja@gmail.com" class="cta-o">Email Us</a>
-        <a href="#" class="cta-o">OpenTable</a>
       </div>
-      <p class="reserve-note">Walk-ins welcome when available &nbsp;·&nbsp; Reservations always guaranteed</p>
+      <p class="reserve-note" id="rNote">Instant confirmation by email &nbsp;·&nbsp; Walk-ins welcome when available</p>
     </div>
   </div>
 </section>
@@ -940,10 +949,48 @@
   </div>
 </footer>
 
+<div class="rmodal" id="rModal" role="dialog" aria-modal="true" aria-label="Reserve">
+  <div class="rmodal-box">
+    <button class="rmodal-x" type="button" aria-label="Close" onclick="cerrarReserva()">×</button>
+    <iframe id="rFrame" title="Reserve at YAO" allow="payment"></iframe>
+  </div>
+</div>
+
 <script>
+  // Reservas: formulario de Ola (mesas + omakase con pago) abierto encima de la página
+  var RESERVA_URL = 'https://oladelivery.mx/reservar/yao';
+  function abrirReserva(tipo) {
+    var lang = (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+    document.getElementById('rFrame').src = RESERVA_URL + '?tipo=' + (tipo === 'omakase' ? 'omakase' : 'mesa') + '&lang=' + lang;
+    document.getElementById('rModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var mm = document.getElementById('mobileMenu'); if (mm) mm.classList.remove('open');
+  }
+  function cerrarReserva() {
+    document.getElementById('rModal').classList.remove('open');
+    document.getElementById('rFrame').src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-reserva]');
+    if (a) { e.preventDefault(); abrirReserva(a.getAttribute('data-reserva')); return; }
+    if (e.target.id === 'rModal') cerrarReserva();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarReserva(); });
+
   function setR(el) {
     document.querySelectorAll('.ropt').forEach(b => b.classList.remove('on'));
     el.classList.add('on');
+    var r = el.getAttribute('data-r'), book = document.getElementById('rBook'), note = document.getElementById('rNote');
+    if (r === 'privado') {
+      book.style.display = 'none';
+      note.innerHTML = 'Tell us about your event &nbsp;·&nbsp; We reply within 24h';
+    } else {
+      book.style.display = '';
+      book.setAttribute('data-reserva', r);
+      book.textContent = r === 'omakase' ? 'Book & pay your seat' : 'Book a table';
+      note.innerHTML = r === 'omakase' ? '$1,300 MXN · $1,650 MXN with pairing &nbsp;·&nbsp; 12 seats' : 'Instant confirmation by email &nbsp;·&nbsp; Walk-ins welcome when available';
+    }
   }
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
